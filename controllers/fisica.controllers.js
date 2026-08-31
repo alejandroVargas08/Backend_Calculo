@@ -1,15 +1,13 @@
 export const calcularVelocidad=(req,res)=>{
-    const {distancia, tiempo}=req.body;
+    const {distancia,tiempo}=req.body;
 
-    const velocidad=distancia/tiempo; //Formula
-
+    const velocidad=distancia/tiempo;
     res.status(200).json({
-        operacion:"Velocidad",
         distancia,
         tiempo,
-        resultado:`Resultado es ${velocidad}`,
-        unidad: "Km/h"
-    })
+        velocidad,
+        resultado:`El resultado es ${velocidad}`
+        });
 }
 
 export const calcularDistancia=(req,res)=>{
