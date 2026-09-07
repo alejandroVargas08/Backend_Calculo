@@ -172,3 +172,34 @@ export const validarEC=(req,res,next)=>{
     next(); 
 
 }
+export const validarAceleracion = (req, res, next) => {
+
+    const { velocidadI, velocidadF, tiempo } = req.body
+
+    if (velocidadI === undefined || velocidadF === undefined || tiempo === undefined) {
+        return res.status(400).json({
+            mensaje: "La velocidad inicial, la velocidad final y el tiempo son datos obligatorios"
+        });
+    };
+
+    if (typeof velocidadI !== "number" || typeof velocidadF !== "number" || typeof tiempo !== "number") {
+        return res.status(400).json({
+            mensaje: "Todos los valores deben ser números"
+        });
+    };
+
+    if (tiempo < 0) {
+        return res.status(400).json({
+            mensaje: "El tiempo no puede ser negativo"
+        });
+    };
+
+    if (tiempo === 0) {
+        return res.status(400).json({
+            mensaje: "El tiempo no puede ser cero"
+        });
+    };
+
+    next();
+
+}

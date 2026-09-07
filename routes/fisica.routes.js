@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {validarVelocidad, validarDistancia, validarTiempo, validarFuerza, validarPeso, validarEC} from "../middlewares/fisica.middelewares.js";
-import {calcularVelocidad, calcularTiempo, calcularDistancia, calcularFuerza, calcularPeso, calcularEC} from "../controllers/fisica.controllers.js";
+import {validarVelocidad, validarDistancia, validarTiempo, validarFuerza, validarPeso, validarEC, validarAceleracion} from "../middlewares/fisica.middelewares.js";
+import {calcularVelocidad, calcularTiempo, calcularDistancia, calcularFuerza, calcularPeso, calcularEC, calcularAceleracion} from "../controllers/fisica.controllers.js";
 
 const router=Router();
 
@@ -16,6 +16,8 @@ router.post("/peso", validarPeso, calcularPeso);
 //Energia
 router.post("/ec", validarEC, calcularEC);
 
+//Acelereacion
+router.post("/aceleracion", validarAceleracion, calcularAceleracion );
 
 
 export default router;
