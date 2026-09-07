@@ -57,7 +57,7 @@
   visibility: visible;
 }
 
-/* ===== SIDE PANEL ===== */
+/*El panel*/
 .menu-panel {
   position: fixed;
   top: 0;
@@ -77,7 +77,7 @@
   transform: translateX(0);
 }
 
-/* ===== MENU ITEMS ===== */
+/* Menu*/
 .menu-item {
   display: flex;
   align-items: center;
@@ -95,7 +95,7 @@
   overflow: hidden;
 }
 
-/* Staggered entrance */
+
 .menu-panel.open .menu-item {
   opacity: 1;
   transform: translateX(0);
