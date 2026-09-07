@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import "./css/estilos.css"
 
 function Velocidad() {
     const [distancia, setDistancia] = useState('')
@@ -13,57 +14,56 @@ function Velocidad() {
         setCargando(true)
 
         try {
-        const respuesta = await fetch('http://localhost:3000/fisica/velocidad', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-            distancia: Number(distancia),
-            tiempo: Number(tiempo)
+            const respuesta = await fetch('http://localhost:3000/fisica/velocidad', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    distancia: Number(distancia),
+                    tiempo: Number(tiempo)
+                })
             })
-        })
 
             const datos = await respuesta.json()
+            await new Promise(resolve => setTimeout(resolve, 500))
+            setCargando(false)
 
-        await new Promise(resolve => setTimeout(resolve, 500))
-
-        setCargando(false)
-
-        if (!respuesta.ok) {
-            setError(datos.mensaje)
-        } else {
-            setResultado(datos)
-        }
+            if (!respuesta.ok) {
+                setError(datos.mensaje)
+            } else {
+                setResultado(datos)
+            }
         } catch (err) {
-        setCargando(false)
-        setError('No se pudo conectar con el servidor')
+            setCargando(false)
+            setError('No se pudo conectar con el servidor')
         }
     }
 
     return (
-        <div className="formulario">
-        <h3>Calcular Velocidad</h3>
+        <div className="formulario-velocidad">
+            <h3>Calcular Velocidad</h3>
 
-        <label>Distancia:</label>
-        <input
-            type="number" placeholder='introduzca el valor de distancia'
-            value={distancia}
-            onChange={(e) => setDistancia(e.target.value)}
-        />
-        <br />
-        <label>Tiempo:</label>
-        <input
-            type="number" placeholder='introduzca el valor de tiempo'
-            value={tiempo}
-            onChange={(e) => setTiempo(e.target.value)}
-        />
-        <br />
+            <label>Distancia</label>
+            <input
+                type="number"
+                placeholder="Valor de distancia"
+                value={distancia}
+                onChange={(e) => setDistancia(e.target.value)}
+            />
 
-        <button onClick={handleSubmit} disabled={cargando}>
-            {cargando ? "Esperame..." : 'Calcula tu respuesta'}
-        </button>
+            <label>Tiempo</label>
+            <input
+                type="number"
+                placeholder="Valor de tiempo"
+                value={tiempo}
+                onChange={(e) => setTiempo(e.target.value)}
+            />
 
-        {resultado && <p className="resultado">Resultado: {resultado.resultado}</p>}
-        {error && <p className="error">Error: {error}</p>}
+            <button onClick={handleSubmit} disabled={cargando}>
+                {cargando ? 'Esperame...' : 'Calcula tu respuesta'}
+            </button>
+
+            {resultado && <p className="resultado">{resultado.resultado}</p>}
+            {error && <p className="error">{error}</p>}
         </div>
     )
 }
