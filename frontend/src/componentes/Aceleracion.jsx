@@ -14,7 +14,7 @@ function Aceleracion() {
         setCargando(true)
 
         try {
-        const respuesta = await fetch('http://localhost:3000/fisica/aceleracion', {
+        const respuesta = await fetch('http://localhost:3001/fisica/aceleracion', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

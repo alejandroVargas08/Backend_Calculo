@@ -13,7 +13,7 @@ function EnergiaCinetica() {
         setCargando(true)
 
         try {
-        const respuesta = await fetch('http://localhost:3000/fisica/ec', {
+        const respuesta = await fetch('http://localhost:3001/fisica/ec', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

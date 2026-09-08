@@ -14,7 +14,7 @@ function Velocidad() {
         setCargando(true)
 
         try {
-            const respuesta = await fetch('http://localhost:3000/fisica/velocidad', {
+            const respuesta = await fetch('http://localhost:3001/fisica/velocidad', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

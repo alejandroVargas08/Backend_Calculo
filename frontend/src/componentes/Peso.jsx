@@ -13,7 +13,7 @@ function Peso() {
         setCargando(true)
 
         try {
-        const respuesta = await fetch('http://localhost:3000/fisica/peso', {
+        const respuesta = await fetch('http://localhost:3001/fisica/peso', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

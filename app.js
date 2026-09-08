@@ -3,7 +3,7 @@ import fisicaRoutes from "./routes/fisica.routes.js"
 import cors from "cors"
 
 const app=express(); //asignamos la dependencia a una constante
-const port=3000; // indicamos el puerto
+const port=3001; // indicamos el puerto
 
 app.use(express.json());//vamos a trabajar con formato json
 app.use(cors())
