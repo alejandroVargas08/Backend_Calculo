@@ -13,7 +13,7 @@ function Tiempo() {
     setCargando(true)
 
     try {
-      const respuesta = await fetch('http://localhost:3001/fisica/tiempo', {
+      const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/fisica/tiempo`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

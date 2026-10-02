@@ -13,7 +13,7 @@ function Fuerza() {
     setCargando(true)
 
     try {
-      const respuesta = await fetch('http://localhost:3001/fisica/fuerza', {
+      const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/fisica/fuerza`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
