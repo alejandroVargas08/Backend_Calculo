@@ -1,61 +1,67 @@
-import { useState } from "react";
-import "./css/Menu.css";
+import { useState } from 'react'
 
 function MenuHamburguesa({ cambiarPagina, paginaActiva }) {
-  const [menuAbierto, setMenuAbierto] = useState(false);
-
-  const toggleMenu = () => setMenuAbierto(!menuAbierto);
-
-  const seleccionarPagina = (pagina) => {
-    cambiarPagina(pagina);
-    setMenuAbierto(false);
-  };
+  const [abierto, setAbierto] = useState(false)
 
   const paginas = [
-    { id: "inicio", nombre: "Inicio" },
-    { id: "velocidad", nombre: "Velocidad" },
-    { id: "distancia", nombre: "Distancia" },
-    { id: "tiempo", nombre: "Tiempo" },
-    { id: "peso", nombre: "Peso" },
-    { id: "aceleracion", nombre: "Aceleracion" },
-    { id: "fuerza", nombre: "Fuerza" },
-    { id: "Ec", nombre: "EC" },
-  ];
+    { id: 'inicio', nombre: 'Inicio' },
+    { id: 'velocidad', nombre: 'Velocidad' },
+    { id: 'distancia', nombre: 'Distancia' },
+    { id: 'tiempo', nombre: 'Tiempo' },
+    { id: 'peso', nombre: 'Peso' },
+    { id: 'aceleracion', nombre: 'Aceleracion' },
+    { id: 'fuerza', nombre: 'Fuerza' },
+    { id: 'Ec', nombre: 'EC' },
+  ]
+
+  const ir = (id) => {
+    cambiarPagina(id)
+    setAbierto(false)
+  }
 
   return (
     <>
-      <div
-        className={`menu-overlay ${menuAbierto ? "open" : ""}`}
-        onClick={toggleMenu}
-      />
+      {abierto && (
+        <div
+          onClick={() => setAbierto(false)}
+          className="fixed inset-0 z-30 bg-black/50"
+        />
+      )}
 
-      <nav className="navbar">
-        <div className="brand">Operaciones</div>
-
+      <nav className="bg-gray-800 p-4 flex justify-between items-center">
+        <h1 className="text-xl font-bold">Operaciones</h1>
         <button
-          className={`hamburger-btn ${menuAbierto ? "open" : ""}`}
-          onClick={toggleMenu}
-          aria-label="Menu"
+          onClick={() => setAbierto(!abierto)}
+          className="relative z-50 text-2xl"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          ☰
         </button>
       </nav>
 
-      <div className={`menu-panel ${menuAbierto ? "open" : ""}`}>
-        {paginas.map((pagina) => (
-          <div
-            key={pagina.id}
-            className={`menu-item ${paginaActiva === pagina.id ? "active" : ""}`}
-            onClick={() => seleccionarPagina(pagina.id)}
-          >
-            {pagina.nombre}
-          </div>
-        ))}
+      <div
+        className={`fixed top-0 right-0 z-40 h-full w-64 bg-gray-800 p-4 pt-16 transition-transform duration-300 ${
+          abierto ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <ul>
+          {paginas.map((pagina) => (
+            <li
+              key={pagina.id}
+              onClick={() => ir(pagina.id)}
+              className={
+                paginaActiva === pagina.id
+                  ? 'p-2 mb-1 cursor-pointer bg-gray-600 rounded'
+                  : 'p-2 mb-1 cursor-pointer hover:bg-gray-700 rounded'
+              }
+            >
+              {pagina.nombre}
+            </li>
+          ))}
+        </ul>
       </div>
     </>
-  );
+  )
 }
 
-export default MenuHamburguesa;
+export default MenuHamburguesa
+

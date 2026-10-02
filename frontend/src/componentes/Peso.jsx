@@ -1,70 +1,78 @@
 import { useState } from 'react'
 
 function Peso() {
-    const [masa, setMasa] = useState('')
-    const [gravedad, setGravedad] = useState('')
-    const [resultado, setResultado] = useState(null)
-    const [error, setError] = useState(null)
-    const [cargando, setCargando] = useState(false)
+  const [masa, setMasa] = useState('')
+  const [gravedad, setGravedad] = useState('')
+  const [resultado, setResultado] = useState(null)
+  const [error, setError] = useState(null)
+  const [cargando, setCargando] = useState(false)
 
-    const handleSubmit = async () => {
-        setError(null)
-        setResultado(null)
-        setCargando(true)
+  const handleSubmit = async () => {
+    setError(null)
+    setResultado(null)
+    setCargando(true)
 
-        try {
-        const respuesta = await fetch('http://localhost:3001/fisica/peso', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-            masa: Number(masa),
-            gravedad: Number(gravedad)
-            })
-        })
+    try {
+      const respuesta = await fetch('http://localhost:3001/fisica/peso', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          masa: Number(masa),
+          gravedad: Number(gravedad),
+        }),
+      })
 
-            const datos = await respuesta.json()
+      const datos = await respuesta.json()
+      setCargando(false)
 
-        await new Promise(resolve => setTimeout(resolve, 500))
-
-        setCargando(false)
-
-        if (!respuesta.ok) {
-            setError(datos.mensaje)
-        } else {
-            setResultado(datos)
-        }
-        } catch (err) {
-        setCargando(false)
-        setError('No se pudo conectar con el servidor')
-        }
+      if (!respuesta.ok) {
+        setError(datos.mensaje)
+      } else {
+        setResultado(datos)
+      }
+    } catch (err) {
+      setCargando(false)
+      setError('No se pudo conectar con el servidor')
     }
+  }
 
-    return (
-        <div className="formulario-velocidad">
-        <h3>Calcular Peso</h3>
+  return (
+    <div className="max-w-sm mx-auto mt-10 p-6 bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-4">Calcular Peso</h2>
 
-        <label>Masa:</label>
-        <input
-            type="number" placeholder='introduzca el valor de la masa'
-            value={masa}
-            onChange={(e) => setMasa(e.target.value)}
-        />
-        
-        <label>Gravedad de tu planeta:</label>
-        <input
-            type="number" placeholder='introduce la gravedad'
-            value={gravedad}
-            onChange={(e) => setGravedad(e.target.value)}
-        />
+      <label>Masa:</label>
+      <input
+        type="number"
+        placeholder="Valor de masa"
+        value={masa}
+        onChange={(e) => setMasa(e.target.value)}
+        className="w-full p-2 mb-3 rounded bg-gray-700 border border-gray-600"
+      />
 
-        <button onClick={handleSubmit} disabled={cargando}>
-            {cargando ? "Esperame..." : 'Calcula tu respuesta'}
-        </button>
+      <label>Gravedad de tu planeta:</label>
+      <input
+        type="number"
+        placeholder="Valor de gravedad"
+        value={gravedad}
+        onChange={(e) => setGravedad(e.target.value)}
+        className="w-full p-2 mb-3 rounded bg-gray-700 border border-gray-600"
+      />
 
-        {resultado && <p className="resultado">{resultado.resultado}</p>}
-        {error && <p className="error">Error: {error}</p>}
-        </div>
-    )
+      <button
+        onClick={handleSubmit}
+        disabled={cargando}
+        className="w-full p-2 bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
+      >
+        {cargando ? 'Calculando...' : 'Calcular'}
+      </button>
+
+      {resultado && (
+        <p className="mt-4 p-3 rounded bg-gray-700 text-green-400">{resultado.resultado}</p>
+      )}
+      {error && <p className="mt-4 p-3 rounded bg-gray-700 text-red-400">Error: {error}</p>}
+    </div>
+  )
 }
 
 export default Peso
+
